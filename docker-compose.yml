@@ -1,6 +1,0 @@
-version: '2'
-services:
-  leds:
-    restart: always
-    build: ./leds
-    privileged: true
