@@ -2,3 +2,5 @@ gpio_example.py
 *.pyc
 _pycache_
 json_old.py
+!httpauth.py
+Dockerfile.template
