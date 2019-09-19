@@ -45,4 +45,8 @@ Copy the leds.php to the root of your webserver. Then, launch the leds.py file.
 
 
 ## Wiring
+If you want to modify the used pins, you should modify the PINs variable in leds.py.
+Raspberry pi power is limited. For a great amount of leds, a relay must be used between the pi and the leds.
+
+Here is the schematics :
 ![schema](./schema.png)
