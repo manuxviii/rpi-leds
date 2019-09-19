@@ -5,6 +5,8 @@ services:
     build: ./leds
     privileged: true
     container_name: leds
+    networks:
+      -docker-localhost
   web:
     restart: always
     build: ./web
