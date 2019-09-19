@@ -1,6 +1,11 @@
 # rpi-leds
 Control rgb leds strips through a web browser with a raspberry pi.
 
+## Usage 
+By default, leds are extincts.
+Simply navigate to \<device-ip\>/leds.php and select a color. 
+
+
 ## Installation
 ### docker
 You should have a raspbian running on your pi.
