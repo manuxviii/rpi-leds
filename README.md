@@ -42,3 +42,7 @@ Dependancies :
   - python3 with the requests and RPi.GPIO modules
 
 Copy the leds.php to the root of your webserver. Then, launch the leds.py file.
+
+
+## Wiring
+![schema](./schema.png)
