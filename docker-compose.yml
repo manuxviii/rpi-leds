@@ -4,3 +4,19 @@ services:
     restart: always
     build: ./leds
     privileged: true
+    container_name: leds
+    links:
+      - "web"
+    networks:
+      - "docker-localhost"
+  web:
+    restart: always
+    buil: ./web
+    privileged: false
+    container_name: web
+    networks:
+      - docker-localhost
+    ports:
+      - 80:80
+  networks:
+    docker-localhost:
