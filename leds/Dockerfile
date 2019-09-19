@@ -1,4 +1,5 @@
 FROM raspbian/stretch
+MAINTAINER contact@manuxviii.ovh
 
 #switch on systemd init system in container
 ENV INITSYSTEM on
