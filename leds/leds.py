@@ -11,6 +11,8 @@ from time import sleep
 
 old_color = ""
 
+GPIO.setwarnings(False)
+
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(PIN_RED, GPIO.OUT)
