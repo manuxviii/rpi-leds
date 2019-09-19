@@ -34,6 +34,9 @@ Launch :
 docker-compose up -d
 ```
 
+*If needed, prebuild images are disponible on the docker hub : manuxviii/rpi-leds and manuxviii/rpi-leds_web. Simply add the docker-compose.yaml from the git.*
+
+
 ### balena
 Simply clone the repository then push to your project :
 ```bash
