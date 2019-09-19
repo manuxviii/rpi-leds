@@ -2,7 +2,7 @@ FROM ulsmith/rpi-raspbian-apache-php
 MAINTAINER contact@manuxviii.ovh
 
 RUN rm /var/www/html/index.html
-ADD . /var/www/html
+COPY . /var/www/html
 RUN chmod -R 0755 /var/www/html
 
 EXPOSE 80

@@ -11,12 +11,12 @@ services:
       - "docker-localhost"
   web:
     restart: always
-    buil: ./web
+    build: ./web
     privileged: false
     container_name: web
     networks:
       - docker-localhost
     ports:
       - 80:80
-  networks:
-    docker-localhost:
+networks:
+  docker-localhost:

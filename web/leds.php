@@ -5,13 +5,13 @@
   <?php
   // enregistre valeur
   if($_POST['favcolor']){
-    $fp=fopen("color.txt", "w");
+    $fp=fopen("color.json", "w");
     $json=json_encode($_POST);
     fwrite($fp, $json);
   }
   // récupère la valeur
-  $fp=fopen("color.txt", "r+");
-  $json=fread($fp,filesize("color.txt"));
+  $fp=fopen("color.json", "r+");
+  $json=fread($fp,filesize("color.json"));
   fclose($fp);
   if($json!=""){// valeur par défaut
     $_POST=json_decode($json,true);
