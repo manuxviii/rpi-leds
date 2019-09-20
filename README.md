@@ -1,26 +1,6 @@
 # rpi-leds
 Control rgb leds strips through a web browser with a raspberry pi.
 
-## Versions
-### v1.0 (Released)
-Current version.
-Leds can display a single color. Fonctionnal web interface.
-
-### v2.0 (wip)
-Programmable shows.
-Fading and flashing effects.
-
-### v3.0 (not in work)
-Fully pogrammable shows.
-Possibility of saving shows and load them quickly.
-
-### v3.5 (not in work)
-Possibility to control different leds strip independantly.
-
-### v4.0 (not in work)
-Android app other wifi
-
-
 
 ## Usage 
 By default, leds are extincts.
@@ -64,7 +44,24 @@ docker-compose up -d
 ### balena
 Simply clone the repository then push to your project :
 ```bash
-git clone https://github.com/manuxviii/rpi-leds.git
+git clone https://github.## Versions
+### v1.0 (Released)
+Current version.
+Leds can display a single color. Fonctionnal web interface.
+
+### v2.0 (wip)
+Programmable shows.
+Fading and flashing effects.
+
+### v3.0 (not in work)
+Fully pogrammable shows.
+Possibility of saving shows and load them quickly.
+
+### v3.5 (not in work)
+Possibility to control different leds strip independantly.
+
+### v4.0 (not in work)
+Android app other wificom/manuxviii/rpi-leds.git
 balena push <project>
 ```
 
@@ -82,3 +79,24 @@ Raspberry pi power is limited. For a great amount of leds, a relay must be used 
 
 Here is the schematics :
 ![schema](./schema.png)
+
+
+
+## Versions
+### v1.0 (Released)
+Current version.
+Leds can display a single color. Fonctionnal web interface.
+
+### v2.0 (wip)
+Programmable shows.
+Fading and flashing effects.
+
+### v3.0 (not in work)
+Fully pogrammable shows.
+Possibility of saving shows and load them quickly.
+
+### v3.5 (not in work)
+Possibility to control different leds strip independantly.
+
+### v4.0 (not in work)
+Android app other wifi
