@@ -87,6 +87,9 @@ Here is the schematics :
 Current version.
 Leds can display a single color. Fonctionnal web interface.
 
+### v1.5 (coming soon)
+Plug some speaker and play your music through bluetooth.
+
 ### v2.0 (wip)
 Programmable shows.
 Fading and flashing effects.
