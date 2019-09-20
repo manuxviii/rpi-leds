@@ -7,6 +7,9 @@ Simply navigate to \<device-ip\>/leds.php and select a color.
 
 
 ## Installation
+
+If you want a lot of stability, you'll need to download the code from the release section.
+
 ### docker
 You should have a raspbian running on your pi.
 
