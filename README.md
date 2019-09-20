@@ -1,9 +1,31 @@
 # rpi-leds
 Control rgb leds strips through a web browser with a raspberry pi.
 
+## Versions
+### v1.0 (Released)
+Current version.
+Leds can display a single color. Fonctionnal web interface.
+
+### v2.0 (wip)
+Programmable shows.
+Fading and flashing effects.
+
+### v3.0 (not in work)
+Fully pogrammable shows.
+Possibility of saving shows and load them quickly.
+
+### v3.5 (not in work)
+Possibility to control different leds strip independantly.
+
+### v4.0 (not in work)
+Android app other wifi
+
+
+
 ## Usage 
 By default, leds are extincts.
 Simply navigate to \<device-ip\>/leds.php and select a color. 
+
 
 
 ## Installation
@@ -38,7 +60,6 @@ docker-compose up -d
 ```
 
 *If needed, prebuild images are disponible on the docker hub : manuxviii/rpi-leds and manuxviii/rpi-leds_web. Simply add the docker-compose.yaml from the git.*
-
 
 ### balena
 Simply clone the repository then push to your project :
