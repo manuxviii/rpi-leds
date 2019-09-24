@@ -64,6 +64,9 @@ Here is the schematics :
 ![schema](./schema.png)
 
 
+## Remerciements
+Conetreillis746 pour la partie web
+
 
 ## Versions
 ### v1.0 (Released)
@@ -83,3 +86,5 @@ Possibility to control different leds strip independantly.
 
 ### v4.0 (not in work)
 Android app other wifi
+
+Branche de developpement principale : balena
