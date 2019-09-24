@@ -28,7 +28,7 @@ blue_pwm.start(250/2.55)
 
 while True:
     # recuperation du fichier json
-    colors = json.get_json()
+    colors = json.get_json("http://web/color.json")
 
     # si la couleur change, on update les pwm
     if colors["favcolor"] != old_color:
