@@ -3,7 +3,7 @@ FROM balenalib/%%BALENA_MACHINE_NAME%%-python:3.7
 #switch on systemd init system in container
 ENV INITSYSTEM on
 
-RUN install_packages python3-rpi.gpio python3-requests
+RUN install_packages python3-rpi.gpio python3-requests python3-simplejson
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app

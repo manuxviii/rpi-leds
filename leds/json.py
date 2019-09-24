@@ -1,7 +1,8 @@
-import re
+# import re
 import requests
+import simplejson as json
 
-def get_color():
+def get_json(field="favcolor"):
     r = requests.get("http://web/color.json")
-    str = re.sub("\"", r':', r.text)
-    return(str.split(":")[4])
+    ret = json.loads(r.text)
+    return(ret[field])

@@ -28,7 +28,7 @@ green_pwm.start(250/2.55)
 blue_pwm.start(250/2.55)
 
 while True:
-    color = json.get_color()
+    color = json.get_json()
 
     if color != old_color:
         red_pwm.ChangeDutyCycle(int(color[1:3], 16)/2.55)
