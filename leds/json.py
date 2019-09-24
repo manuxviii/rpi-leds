@@ -2,6 +2,6 @@
 import requests
 import simplejson as json
 
-def get_json():
-    r = requests.get("http://web/color.json")
+def get_json(url):
+    r = requests.get(url)
     return(json.loads(r.text))
