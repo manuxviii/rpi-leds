@@ -13,24 +13,20 @@ from time import sleep
 
 old_color = ""
 
-print("gpio init")
 gpio.gpio_init(PIN_RED, PIN_GREEN, PIN_BLUE)
 
 red_pwm = GPIO.PWM(PIN_RED, FREQUENCE)
 green_pwm = GPIO.PWM(PIN_GREEN, FREQUENCE)
 blue_pwm = GPIO.PWM(PIN_BLUE, FREQUENCE)
 
-print("starting pwm")
 red_pwm.start(250/2.55)
 green_pwm.start(250/2.55)
 blue_pwm.start(250/2.55)
 
 while True:
-    print("boucle")
     colors = json.get_json()
 
     if colors["favcolor"] != old_color:
-        print("if")
         gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, colors["favcolor"])
 
         old_color = colors["favcolor"]
