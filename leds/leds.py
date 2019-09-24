@@ -5,36 +5,34 @@ PIN_GREEN = 22
 PIN_BLUE = 27
 FREQUENCE = 100
 
+import simplejson
 import json
+import gpio
 import RPi.GPIO as GPIO
 from time import sleep
 
 old_color = ""
 
-GPIO.setwarnings(False)
-
-GPIO.setmode(GPIO.BCM)
-
-GPIO.setup(PIN_RED, GPIO.OUT)
-GPIO.setup(PIN_GREEN, GPIO.OUT)
-GPIO.setup(PIN_BLUE, GPIO.OUT)
+print("gpio init")
+gpio.gpio_init(PIN_RED, PIN_GREEN, PIN_BLUE)
 
 red_pwm = GPIO.PWM(PIN_RED, FREQUENCE)
 green_pwm = GPIO.PWM(PIN_GREEN, FREQUENCE)
 blue_pwm = GPIO.PWM(PIN_BLUE, FREQUENCE)
 
+print("starting pwm")
 red_pwm.start(250/2.55)
 green_pwm.start(250/2.55)
 blue_pwm.start(250/2.55)
 
 while True:
-    color = json.get_json()
+    print("boucle")
+    colors = json.get_json()
 
-    if color != old_color:
-        red_pwm.ChangeDutyCycle(int(color[1:3], 16)/2.55)
-        green_pwm.ChangeDutyCycle(int(color[3:5], 16)/2.55)
-        blue_pwm.ChangeDutyCycle(int(color[5:7], 16)/2.55)
+    if colors["favcolor"] != old_color:
+        print("if")
+        gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, colors["favcolor"])
 
-        old_color = color
+        old_color = colors["favcolor"]
 
     sleep(1)

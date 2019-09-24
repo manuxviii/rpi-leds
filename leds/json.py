@@ -2,7 +2,6 @@
 import requests
 import simplejson as json
 
-def get_json(field="favcolor"):
+def get_json():
     r = requests.get("http://web/color.json")
-    ret = json.loads(r.text)
-    return(ret[field])
+    return(json.loads(r.text))
