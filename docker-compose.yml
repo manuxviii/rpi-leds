@@ -9,6 +9,8 @@ services:
       - "web"
     networks:
       - docker-localhost
+    depends_on:
+      - web
   web:
     restart: always
     build: ./web
