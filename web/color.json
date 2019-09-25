@@ -1,1 +1,8 @@
-{"favcolor":"#000000"}
+{
+  "config": {
+    "mode": "fixe"
+  },
+  "colors": {
+    "0": "#ffaa00"
+  }
+}

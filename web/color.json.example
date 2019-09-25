@@ -1,0 +1,11 @@
+{
+  "config": {
+    "mode": "fixe/fade/flash",
+    "speed": "2.5" //nombre de secondes,
+    "random": "True" //ne tiens pas compte de l'ordre
+  },
+  "colors": {
+    "0": "#000000",
+    "1": "random", // choisir couleur random
+  }
+}

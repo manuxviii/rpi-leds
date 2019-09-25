@@ -28,12 +28,19 @@ blue_pwm.start(250/2.55)
 
 while True:
     # recuperation du fichier json
-    colors = json.get_json("http://web/color.json")
+    jsn = json.get_json("http://web/color.json")
 
     # si la couleur change, on update les pwm
-    if colors["favcolor"] != old_color:
-        gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, colors["favcolor"])
-
-        old_color = colors["favcolor"]
-
-    sleep(1)
+    try:
+        if jsn["config"]["mode"] == "fixe":
+            gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, jsn["colors"]["0"])
+        elif jsn["config"]["mode"] == "fade":
+            pass
+        elif jsn["config"]["mode"] == "flash":
+            pass
+        else:
+            raise("error")
+    except:
+        print("error")
+        gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, "#000000")
+    sleep(2)
