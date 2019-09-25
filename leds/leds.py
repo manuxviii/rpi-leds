@@ -6,41 +6,59 @@ PIN_BLUE = 27
 FREQUENCE = 100
 
 import simplejson
+import effects
+import asyncio
 import json
 import gpio
 import RPi.GPIO as GPIO
 from time import sleep
 
-old_color = ""
+async def main():
+    task = None
+    oldjsn = None
 
-# initialisation du gpio
-gpio.gpio_init(PIN_RED, PIN_GREEN, PIN_BLUE)
+    # initialisation du gpio
+    gpio.gpio_init(PIN_RED, PIN_GREEN, PIN_BLUE)
 
-# creation des signaux pwm
-red_pwm = GPIO.PWM(PIN_RED, FREQUENCE)
-green_pwm = GPIO.PWM(PIN_GREEN, FREQUENCE)
-blue_pwm = GPIO.PWM(PIN_BLUE, FREQUENCE)
+    # creation des signaux pwm
+    red_pwm = GPIO.PWM(PIN_RED, FREQUENCE)
+    green_pwm = GPIO.PWM(PIN_GREEN, FREQUENCE)
+    blue_pwm = GPIO.PWM(PIN_BLUE, FREQUENCE)
 
-# demarrage des signaux pwm. leds eteintes
-red_pwm.start(250/2.55)
-green_pwm.start(250/2.55)
-blue_pwm.start(250/2.55)
+    # demarrage des signaux pwm. leds eteintes
+    red_pwm.start(250/2.55)
+    green_pwm.start(250/2.55)
+    blue_pwm.start(250/2.55)
 
-while True:
-    # recuperation du fichier json
-    jsn = json.get_json("http://web/color.json")
+    while True:
+        # recuperation du fichier json
+        jsn = json.get_json("http://web/color.json")
 
-    # si la couleur change, on update les pwm
-    try:
-        if jsn["config"]["mode"] == "fixe":
-            gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, jsn["colors"]["0"])
-        elif jsn["config"]["mode"] == "fade":
-            pass
-        elif jsn["config"]["mode"] == "flash":
-            pass
-        else:
-            raise("error")
-    except:
-        print("error")
-        gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, "#000000")
-    sleep(2)
+        try:
+            # si la couleur change, on update
+            if jsn != oldjsn:
+                # si une tache est en cours, on la supprime
+                if task != None:
+                    task.cancel()
+                    try:
+                        await task
+                    except asyncio.CancelledError:
+                        pass
+
+                if jsn["config"]["mode"] == "fixe":
+                    gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, jsn["colors"]["0"])
+                    task = None
+                elif jsn["config"]["mode"] == "fade":
+                    task = asyncio.create_task(effects.fade(red_pwm, green_pwm, blue_pwm, jsn))
+                elif jsn["config"]["mode"] == "flash":
+                    task = asyncio.create_task(effects.flash(red_pwm, green_pwm, blue_pwm, jsn))
+                else:
+                    raise("error")
+        except:
+            print("error")
+            task = None
+            gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, "#000000")
+        oldjsn = jsn
+        sleep(2)
+
+asyncio.run(main())
