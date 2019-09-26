@@ -14,7 +14,7 @@ import multiprocessing
 import gpio
 from time import sleep
 
-async def main():
+def main():
     task = None
     oldjsn = None
     pwm = None
@@ -38,9 +38,8 @@ async def main():
                 if jsn["config"]["mode"] == "fixe":
                     pwm = gpio.gpio_init(PIN, jsn["config"]["frequence"])
                     gpio.pwm_change_cycle(pwm, jsn["colors"]["0"])
-                # a modifier
                 elif jsn["config"]["mode"] == "fade":
-                    task = multiprocessing.Process(target=effects.fade, args=(PIN, jsn))
+                    task = multiprocessing.Process(target=effects.fade_loop, args=(PIN, jsn))
                 elif jsn["config"]["mode"] == "flash":
                     task = multiprocessing.Process(target=effects.flash, args=(PIN, jsn))
                 else:
@@ -60,4 +59,4 @@ async def main():
         oldjsn = jsn
         sleep(2)
 
-asyncio.run(main())
+main()

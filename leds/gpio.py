@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
+import div
 
-def gpio_init(pin, frq, color="#000000"):
+def gpio_init(pin, frq, hex_color="#000000", dec_color=None):
     """This function initialisation the gpio functions.
     It take as parameters the 3 pins used for controlling the leds"""
 
@@ -18,18 +19,28 @@ def gpio_init(pin, frq, color="#000000"):
     pwm[2] = GPIO.PWM(pin["green"], frq)
     pwm[3] = GPIO.PWM(pin["blue"], frq)
 
-    # demarrage des signaux pwm. leds eteintes
-    pwm[1].start(int(color[1:3])/2.55)
-    pwm[2].start(int(color[3:5])/2.55)
-    pwm[3].start(int(color[5:7])/2.55)
+    # demarrage des signaux pwm
+    if dec_color == None:
+        dec_color = div.color_to_dict(hex_color)
+    pwm[1].start(dec_color["red"]/2.55)
+    pwm[2].start(dec_color["green"]/2.55)
+    pwm[3].start(dec_color["blue"]/2.55)
 
     return pwm
 
 
-def pwm_change_cycle(pwm, color):
+def pwm_change_cycle(pwm, hex_color=None, dec_color=None):
     """This function change the pwm cycle.
-    It take an hexadecimal value as parameter and the leds pins"""
+    It take an (hexa)decimal value as parameter and the leds pins"""
 
-    pwm[1].ChangeDutyCycle(int(color[1:3], 16)/2.55)
-    pwm[2].ChangeDutyCycle(int(color[3:5], 16)/2.55)
-    pwm[3].ChangeDutyCycle(int(color[5:7], 16)/2.55)
+    if (dec_color == None) and (hex_color == None):
+        dec_color = {
+            "red": 0,
+            "green": 0,
+            "blue": 0
+        }
+    if dec_color == None:
+        dec_color = div.color_to_dict(hex_color)
+    pwm[1].ChangeDutyCycle(dec_color["red"]/2.55)
+    pwm[2].ChangeDutyCycle(dec_color["green"]/2.55)
+    pwm[3].ChangeDutyCycle(dec_color["blue"]/2.55)
