@@ -9,6 +9,7 @@ import simplejson
 import effects
 import asyncio
 import json
+import multiprocessing
 import gpio
 import RPi.GPIO as GPIO
 from time import sleep
@@ -39,11 +40,7 @@ async def main():
             if jsn != oldjsn:
                 # si une tache est en cours, on la supprime
                 if task != None:
-                    task.cancel()
-                    try:
-                        await task
-                    except asyncio.CancelledError:
-                        pass
+                    task.terminate()
 
                 if jsn["config"]["mode"] == "fixe":
                     gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, jsn["colors"]["0"])
@@ -51,13 +48,17 @@ async def main():
                 elif jsn["config"]["mode"] == "fade":
                     task = asyncio.create_task(effects.fade(red_pwm, green_pwm, blue_pwm, jsn))
                 elif jsn["config"]["mode"] == "flash":
-                    task = asyncio.create_task(effects.flash(red_pwm, green_pwm, blue_pwm, jsn))
+                    # task = asyncio.Task(effects.flash(red_pwm, green_pwm, blue_pwm, jsn))
+                    task = multiprocessing.Process(target=effects.flash, args=(red_pwm, green_pwm, blue_pwm, jsn,))
+                    task.start()
                 else:
                     raise("error")
-        except:
+        except Exception as e:
             print("error")
+            print(e)
             task = None
             gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, "#000000")
+
         oldjsn = jsn
         sleep(2)
 

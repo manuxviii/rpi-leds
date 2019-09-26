@@ -1,8 +1,12 @@
 {
   "config": {
-    "mode": "fixe"
+    "mode": "flash",
+    "speed": "1"
   },
   "colors": {
-    "0": "#ffaa00"
+    "0": "#ffaa00",
+    "1": "#ffffff",
+    "2": "#000000",
+    "3": "#90fa32"
   }
 }
