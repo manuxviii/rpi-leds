@@ -27,6 +27,7 @@ def fade(pwm, old_color, new_color):
         gpio.pwm_change_cycle(pwm, dec_color=old_color)
         time.sleep(0.005)
         i += 1
+        # TODO: reglage timer par utilisateur
 
 def fade_loop(pin, jsn):
     """fade between all color sets in jsn["colors"]"""
@@ -48,3 +49,5 @@ def flash(pin, jsn):
         for color in jsn["colors"]:
             gpio.pwm_change_cycle(pwm, jsn["colors"][color])
             time.sleep(int(jsn["config"]["speed"]))
+
+# TODO: random color (fade and flash)
