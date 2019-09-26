@@ -8,11 +8,10 @@ PIN = {
 
 import simplejson
 import effects
-import asyncio
 import json
 import multiprocessing
 import gpio
-from time import sleep
+import time
 
 def main():
     task = None
@@ -57,6 +56,6 @@ def main():
             effects.fixe(PIN, "#000000", FREQUENCE)
 
         oldjsn = jsn
-        sleep(2)
+        time.sleep(2)
 
 main()
