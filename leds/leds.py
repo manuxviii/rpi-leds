@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-PIN_RED = 17
-PIN_GREEN = 22
-PIN_BLUE = 27
-FREQUENCE = 100
+PIN = {
+    "red": 17,
+    "green": 22,
+    "blue": 27
+}
 
 import simplejson
 import effects
@@ -11,25 +12,12 @@ import asyncio
 import json
 import multiprocessing
 import gpio
-import RPi.GPIO as GPIO
 from time import sleep
 
 async def main():
     task = None
     oldjsn = None
-
-    # initialisation du gpio
-    gpio.gpio_init(PIN_RED, PIN_GREEN, PIN_BLUE)
-
-    # creation des signaux pwm
-    red_pwm = GPIO.PWM(PIN_RED, FREQUENCE)
-    green_pwm = GPIO.PWM(PIN_GREEN, FREQUENCE)
-    blue_pwm = GPIO.PWM(PIN_BLUE, FREQUENCE)
-
-    # demarrage des signaux pwm. leds eteintes
-    red_pwm.start(250/2.55)
-    green_pwm.start(250/2.55)
-    blue_pwm.start(250/2.55)
+    pwm = None
 
     while True:
         # recuperation du fichier json
@@ -41,23 +29,33 @@ async def main():
                 # si une tache est en cours, on la supprime
                 if task != None:
                     task.terminate()
+                    task = None
+                elif pwm != None:
+                    for entry in pwm:
+                        pwm[entry].stop()
+                    pwm = None
 
                 if jsn["config"]["mode"] == "fixe":
-                    gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, jsn["colors"]["0"])
-                    task = None
+                    pwm = gpio.gpio_init(PIN, jsn["config"]["frequence"])
+                    gpio.pwm_change_cycle(pwm, jsn["colors"]["0"])
+                # a modifier
                 elif jsn["config"]["mode"] == "fade":
-                    task = asyncio.create_task(effects.fade(red_pwm, green_pwm, blue_pwm, jsn))
+                    task = multiprocessing.Process(target=effects.fade, args=(PIN, jsn))
                 elif jsn["config"]["mode"] == "flash":
-                    # task = asyncio.Task(effects.flash(red_pwm, green_pwm, blue_pwm, jsn))
-                    task = multiprocessing.Process(target=effects.flash, args=(red_pwm, green_pwm, blue_pwm, jsn,))
-                    task.start()
+                    task = multiprocessing.Process(target=effects.flash, args=(PIN, jsn))
                 else:
-                    raise("error")
+                    raise EnvironmentError
+
+                if task != None:
+                    task.start()
+
         except Exception as e:
             print("error")
             print(e)
-            task = None
-            gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, "#000000")
+            if task != None:
+                task.terminate()
+                task = None
+            effects.fixe(PIN, "#000000", FREQUENCE)
 
         oldjsn = jsn
         sleep(2)

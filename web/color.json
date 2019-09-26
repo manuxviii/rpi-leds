@@ -1,6 +1,7 @@
 {
   "config": {
     "mode": "flash",
+    "frequence": 100,
     "speed": "1"
   },
   "colors": {

@@ -1,13 +1,17 @@
 import gpio
 import time
 
-# testing. a implementer
-async def fade(red_pwm, green_pwm, blue_pwm, jsn):
-    gpio.pwm_change_cycle(red_pwm, green_pwm, blue_pwm, "#ffffff")
+def fixe(pin, color, frq):
+    pwm = gpio.gpio_init(pin, frq)
+    gpio.pwm_change_cycle(pwm, color)
 
-def flash(red_pwm, green_pwm, blue_pwm, jsn):
+async def fade(pin, old_color, new_color):
+    # while
+    pass
+
+def flash(pin, jsn):
+    pwm = gpio.gpio_init(pin, jsn["config"]["frequence"])
     while True:
         for color in jsn["colors"]:
-            print("color : ", jsn["colors"][color])
-            gpio.pwm_change_cycle(red_pwm, blue_pwm, green_pwm, jsn["colors"][color])
+            gpio.pwm_change_cycle(pwm, jsn["colors"][color])
             time.sleep(int(jsn["config"]["speed"]))
