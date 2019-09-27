@@ -20,8 +20,7 @@ def fade(pwm, old_color, new_color):
     while i < steps:
         old_color = {
             "red": (old_color["red"] + (new_color["red"] - old_color["red"]) / steps),
-            "greepwm = gpio.gpio_init(PIN, jsn["config"]["frequence"])
-                    gpio.pwm_change_cycle(pwm, jsn["colors"]["0"])n": (old_color["green"] + (new_color["green"] - old_color["green"]) / steps),
+            "green": (old_color["green"] + (new_color["green"] - old_color["green"]) / steps),
             "blue": (old_color["blue"] + (new_color["blue"] - old_color["blue"]) / steps)
         }
         gpio.pwm_change_cycle(pwm, dec_color=old_color)
