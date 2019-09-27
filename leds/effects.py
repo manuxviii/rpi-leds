@@ -2,8 +2,8 @@ import gpio
 import time
 import div
 
-def fade(pwm, old_color, new_color):
-    """fade from a color to another"""
+def fade(pwm, old_color, new_color, speed=0.005):
+    """fade from a color to another with parametric time"""
 
     old_color = div.color_to_dict(old_color)
     new_color = div.color_to_dict(new_color)
@@ -17,9 +17,8 @@ def fade(pwm, old_color, new_color):
             "blue": (old_color["blue"] + (new_color["blue"] - old_color["blue"]) / steps)
         }
         gpio.pwm_change_cycle(pwm, dec_color=old_color)
-        time.sleep(0.005)
+        time.sleep(float(speed))
         i += 1
-        # TODO: reglage timer par utilisateur
 
 def fade_loop(pin, jsn, old_color="#000000"):
     """fade between all color sets in jsn["colors"]"""
@@ -30,7 +29,7 @@ def fade_loop(pin, jsn, old_color="#000000"):
         i = 0
         while i < len(jsn["colors"]):
             color = div.is_random(jsn["colors"][str(i)])
-            fade(pwm, old_color, color)
+            fade(pwm, old_color, color, jsn["config"]["speed"])
             old_color = color
             i += 1
 

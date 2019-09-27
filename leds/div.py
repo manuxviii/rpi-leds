@@ -12,8 +12,11 @@ def color_to_dict(color):
 def random_color():
     """Return a random color in hex format"""
 
-    return "#" + str(hex(random.randint(0, 16777215)))[2:]
+    rnd = "#" + str(hex(random.randint(0, 16777215)))[2:]
+    while len(rnd) != 7:
+        rnd += "0"
 
+    return rnd
 
 def is_random(color, output="hex"):
     """Replace "random" by a random color.
