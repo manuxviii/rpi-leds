@@ -31,14 +31,11 @@ def gpio_init(pin, frq, hex_color="#000000", dec_color=None):
 
 def pwm_change_cycle(pwm, hex_color=None, dec_color=None):
     """This function change the pwm cycle.
-    It take an (hexa)decimal value as parameter and the leds pins"""
+    It take an (hexa)decimal value as parameter and the leds pins
+    If no color is pass, a random color will be set"""
 
     if (dec_color == None) and (hex_color == None):
-        dec_color = {
-            "red": 0,
-            "green": 0,
-            "blue": 0
-        }
+        dec_color = div.random_color()
     if dec_color == None:
         dec_color = div.color_to_dict(hex_color)
     pwm[1].ChangeDutyCycle(dec_color["red"]/2.55)

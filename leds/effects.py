@@ -21,17 +21,17 @@ def fade(pwm, old_color, new_color):
         i += 1
         # TODO: reglage timer par utilisateur
 
-def fade_loop(pin, jsn):
+def fade_loop(pin, jsn, old_color="#000000"):
     """fade between all color sets in jsn["colors"]"""
 
     pwm = gpio.gpio_init(pin, jsn["config"]["frequence"])
 
-    old_color = "#000000"
     while True:
         i = 0
         while i < len(jsn["colors"]):
-            fade(pwm, old_color, jsn["colors"][str(i)])
-            old_color = jsn["colors"][str(i)]
+            color = div.is_random(jsn["colors"][str(i)])
+            fade(pwm, old_color, color)
+            old_color = color
             i += 1
 
 def flash(pin, jsn):
@@ -39,7 +39,5 @@ def flash(pin, jsn):
     pwm = gpio.gpio_init(pin, jsn["config"]["frequence"])
     while True:
         for color in jsn["colors"]:
-            gpio.pwm_change_cycle(pwm, jsn["colors"][color])
+            gpio.pwm_change_cycle(pwm, div.is_random(jsn["colors"][color]))
             time.sleep(int(jsn["config"]["speed"]))
-
-# TODO: random color (fade and flash)

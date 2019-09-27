@@ -52,8 +52,7 @@ def main():
             if task != None:
                 task.terminate()
                 task = None
-            effects.fixe(PIN, "#000000", FREQUENCE)
-
+            pwm = gpio.gpio_init(PIN, jsn["config"]["frequence"], hex_color="#000000")
         oldjsn = jsn
         time.sleep(2)
 

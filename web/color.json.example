@@ -8,5 +8,8 @@
   "colors": {
     "0": "#000000",
     "1": "random", // choisir couleur random
+    // deux types de random :
+    //    genere une fois au niveau du navigateur -> valeur hexa dans le fichier
+    //    genere plusieurs fois au niveau serveur -> valeur "random" dans le fichier
   }
 }
