@@ -35,8 +35,7 @@ def main():
                     pwm = None
 
                 if jsn["config"]["mode"] == "fixe":
-                    pwm = gpio.gpio_init(PIN, jsn["config"]["frequence"])
-                    gpio.pwm_change_cycle(pwm, jsn["colors"]["0"])
+                    pwm = gpio.gpio_init(PIN, jsn["config"]["frequence"], hex_color=jsn["colors"]["0"])
                 elif jsn["config"]["mode"] == "fade":
                     task = multiprocessing.Process(target=effects.fade_loop, args=(PIN, jsn))
                 elif jsn["config"]["mode"] == "flash":

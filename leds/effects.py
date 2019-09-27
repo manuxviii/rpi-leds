@@ -2,13 +2,6 @@ import gpio
 import time
 import div
 
-# pas sur que celle est utile, a verifier
-def fixe(pin, color, frq):
-    """Affiche une couleur fixe"""
-
-    pwm = gpio.gpio_init(pin, frq)
-    gpio.pwm_change_cycle(pwm, color)
-
 def fade(pwm, old_color, new_color):
     """fade from a color to another"""
 
