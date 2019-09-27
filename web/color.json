@@ -1,8 +1,8 @@
 {
   "config": {
     "mode": "fade",
-    "frequence": 250,
-    "speed": "1"
+    "frequence": 180,
+    "speed": "0.004"
   },
   "colors": {
     "0": "random",
