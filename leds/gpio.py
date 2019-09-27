@@ -1,22 +1,25 @@
 import RPi.GPIO as GPIO
 import div
 
-def gpio_init(pin, frq, hex_color="#000000", dec_color=None):
+def gpio_init(jsn, hex_color=None, dec_color=None):
     """This function initialisation the gpio functions.
     It take as parameters the 3 pins used for controlling the leds"""
+
+    if hex_color == None and dec_color == None:
+        hex_color = "#000000"
 
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
 
-    GPIO.setup(pin["red"], GPIO.OUT)
-    GPIO.setup(pin["green"], GPIO.OUT)
-    GPIO.setup(pin["blue"], GPIO.OUT)
+    GPIO.setup(jsn["pins"]["red"], GPIO.OUT)
+    GPIO.setup(jsn["pins"]["green"], GPIO.OUT)
+    GPIO.setup(jsn["pins"]["blue"], GPIO.OUT)
 
     # creation des signaux pwm
     pwm = {
-        "red": GPIO.PWM(pin["red"], frq),
-        "green": GPIO.PWM(pin["green"], frq),
-        "blue": GPIO.PWM(pin["blue"], frq)
+        "red": GPIO.PWM(jsn["pins"]["red"], jsn["config"]["frequence"]),
+        "green": GPIO.PWM(jsn["pins"]["green"], jsn["config"]["frequence"]),
+        "blue": GPIO.PWM(jsn["pins"]["blue"], jsn["config"]["frequence"])
     }
 
     # demarrage des signaux pwm

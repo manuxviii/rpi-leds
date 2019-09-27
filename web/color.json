@@ -1,11 +1,18 @@
 {
-  "config": {
-    "mode": "fade",
-    "frequence": 180,
-    "speed": "0.004"
-  },
-  "colors": {
-    "0": "random",
-    "1": "random"
+  "0": {
+    "pins": {
+      "red": 17,
+      "green": 22,
+      "blue": 27
+    },
+    "config": {
+      "mode": "flash",
+      "frequence": 180,
+      "speed": "0.004"
+    },
+    "colors": {
+      "0": "random",
+      "1": "random"
+    }
   }
 }

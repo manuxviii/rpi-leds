@@ -1,15 +1,21 @@
 {
-  "config": {
-    "mode": "fixe/fade/flash",
-    "speed": "2.5" //nombre de secondes,
-    "random": "True" //ne tiens pas compte de l'ordre
-    "frequence": "100"
-  },
-  "colors": {
-    "0": "#000000",
-    "1": "random", // choisir couleur random
-    // deux types de random :
-    //    genere une fois au niveau du navigateur -> valeur hexa dans le fichier
-    //    genere plusieurs fois au niveau serveur -> valeur "random" dans le fichier
-  }
+  "0": {
+    pins: {
+      "red": "17",
+      "green": "22",
+      "blue": "27"
+    },
+    "config": {
+      "mode": "fixe/fade/flash",
+      "speed": "2.5" //nombre de secondes,
+      "random": "True" //ne tiens pas compte de l'ordre
+      "frequence": "100"
+    },
+    "colors": {
+      "0": "#000000",
+      "1": "random", // choisir couleur random
+      // deux types de random :
+      //    genere une fois au niveau du navigateur -> valeur hexa dans le fichier
+      //    genere plusieurs fois au niveau serveur -> valeur "random" dans le fichier
+    }
 }

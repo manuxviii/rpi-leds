@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 
-PIN = {
-    "red": 17,
-    "green": 22,
-    "blue": 27
-}
-
 import simplejson
 import effects
 import json
@@ -34,12 +28,12 @@ def main():
                         pwm[entry].stop()
                     pwm = None
 
-                if jsn["config"]["mode"] == "fixe":
-                    pwm = gpio.gpio_init(PIN, jsn["config"]["frequence"], hex_color=jsn["colors"]["0"])
-                elif jsn["config"]["mode"] == "fade":
-                    task = multiprocessing.Process(target=effects.fade_loop, args=(PIN, jsn))
-                elif jsn["config"]["mode"] == "flash":
-                    task = multiprocessing.Process(target=effects.flash, args=(PIN, jsn))
+                if jsn["0"]["config"]["mode"] == "fixe":
+                    pwm = gpio.gpio_init(jsn["0"], hex_color=jsn["colors"]["0"])
+                elif jsn["0"]["config"]["mode"] == "fade":
+                    task = multiprocessing.Process(target=effects.fade_loop, args=(jsn["0"],))
+                elif jsn["0"]["config"]["mode"] == "flash":
+                    task = multiprocessing.Process(target=effects.flash, args=(jsn["0"],))
                 else:
                     raise EnvironmentError
 
@@ -52,7 +46,7 @@ def main():
             if task != None:
                 task.terminate()
                 task = None
-            pwm = gpio.gpio_init(PIN, jsn["config"]["frequence"], hex_color="#000000")
+            pwm = gpio.gpio_init(jsn["0"], hex_color="#000000")
         oldjsn = jsn
         time.sleep(2)
 
