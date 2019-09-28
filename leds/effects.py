@@ -1,6 +1,7 @@
 import gpio
 import time
 import div
+import multiprocessing
 
 def fade(pwm, old_color, new_color, speed=0.005):
     """fade from a color to another with parametric time"""
@@ -35,8 +36,23 @@ def fade_loop(jsn, old_color="#000000"):
 
 def flash(jsn):
     """switch abruptely between all color in jsn["colors"]"""
+
     pwm = gpio.gpio_init(jsn)
     while True:
         for color in jsn["colors"]:
             gpio.pwm_change_cycle(pwm, div.is_random(jsn["colors"][color]))
             time.sleep(float(jsn["config"]["speed"]))
+
+def strip(jsn, task=None):
+    """Define wich mode to call
+    Need to be launch as a thread"""
+
+    if jsn["config"]["mode"] == "fixe":
+        return gpio.gpio_init(jsn, hex_color=jsn["colors"]["0"])
+
+    if jsn["config"]["mode"] == "fade":
+        fade_loop(jsn)
+    elif jsn["config"]["mode"] == "flash":
+        flash(jsn)
+    else:
+        raise EnvironmentError

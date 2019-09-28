@@ -7,47 +7,38 @@ import multiprocessing
 import gpio
 import time
 
-def main():
-    task = None
-    oldjsn = None
-    pwm = None
 
-    while True:
-        # recuperation du fichier json
-        jsn = json.get_json("http://web/color.json")
+task = {}
+oldjsn = None
 
-        try:
-            # si la couleur change, on update
-            if jsn != oldjsn:
-                # si une tache est en cours, on la supprime
-                if task != None:
-                    task.terminate()
-                    task = None
-                elif pwm != None:
-                    for entry in pwm:
-                        pwm[entry].stop()
-                    pwm = None
+while True:
+    # recuperation du fichier json
+    jsn = json.get_json("http://web/color.json")
 
-                if jsn["0"]["config"]["mode"] == "fixe":
-                    pwm = gpio.gpio_init(jsn["0"], hex_color=jsn["colors"]["0"])
-                elif jsn["0"]["config"]["mode"] == "fade":
-                    task = multiprocessing.Process(target=effects.fade_loop, args=(jsn["0"],))
-                elif jsn["0"]["config"]["mode"] == "flash":
-                    task = multiprocessing.Process(target=effects.flash, args=(jsn["0"],))
-                else:
-                    raise EnvironmentError
+    try:
+        if jsn != oldjsn:
+            if oldjsn != None:
+                while len(jsn) < len(oldjsn):
+                    task[len(oldjsn)].terminate()
+                    task.pop(len(jsn))
 
-                if task != None:
-                    task.start()
+                    for pingroup in jsn:
+                        if jsn[pingroup] != oldjsn[pingroup]:
+                            task[int(pingroup)].terminate()
+                            task[int(pingroup)] = multiprocessing.Process(target=effects.strip, args=(jsn[pingroup],))
+                            task[int(pingroup)].start()
+            else:
+                for pingroup in jsn:
+                    task[int(pingroup)] = multiprocessing.Process(target=effects.strip, args=(jsn[pingroup],))
+                    task[int(pingroup)].start()
 
-        except Exception as e:
-            print("error")
-            print(e)
-            if task != None:
-                task.terminate()
-                task = None
-            pwm = gpio.gpio_init(jsn["0"], hex_color="#000000")
-        oldjsn = jsn
-        time.sleep(2)
+        jsn = oldjsn
 
-main()
+    except Exception as e:
+        print("error", e)
+        for tsk in task:
+            task[tsk].terminate()
+        for pingroup in jsn:
+            gpio.gpio_init(jsn[pingroup])
+
+    time.sleep(2)

@@ -6,9 +6,25 @@
       "blue": 27
     },
     "config": {
+      "mode": "fade",
+      "frequence": 100,
+      "speed": "0.005"
+    },
+    "colors": {
+      "0": "random",
+      "1": "random"
+    }
+  },
+  "2": {
+    "pins": {
+      "red": 18,
+      "green": 23,
+      "blue": 24
+    },
+    "config": {
       "mode": "flash",
-      "frequence": 180,
-      "speed": "0.004"
+      "frequence": 100,
+      "speed": "1"
     },
     "colors": {
       "0": "random",
